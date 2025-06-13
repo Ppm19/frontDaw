@@ -1,0 +1,232 @@
+:host {
+  display: block;
+}
+
+.contenido-productos {
+  width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  margin-top: 20px;
+  box-sizing: border-box;
+  min-height: calc(100vh - 40px);
+}
+
+.loading-indicator,
+.error-mensaje,
+.productos-vacios {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+}
+
+.error-mensaje {
+  color: red;
+}
+
+.search-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-container mat-form-field {
+  width: 50%;
+}
+
+:host ::ng-deep .search-container .mat-form-field.mat-focused .mat-form-field-label {
+  color: var(--color-primary);
+}
+
+:host ::ng-deep .search-container .mat-form-field.mat-focused .mat-form-field-outline-thick {
+  color: var(--color-primary) !important;
+}
+
+:host ::ng-deep .search-container .mat-input-element {
+  caret-color: var(--color-primary);
+}
+
+:host ::ng-deep .search-container .mat-mdc-form-field.mat-focused .mdc-notched-outline-container .mdc-notched-outline > * {
+    border-color: var(--color-primary) !important;
+}
+
+:host ::ng-deep .search-container .mat-mdc-form-field.mat-focused .mat-mdc-floating-label {
+    color: var(--color-primary) !important;
+}
+
+:host ::ng-deep .search-container .mat-mdc-text-field-wrapper {
+  caret-color: var(--color-primary) !important;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 30px;
+  row-gap: 40px;
+}
+
+@media screen and (max-width: 1024px) {
+  .productos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 20px;
+  }
+
+  .producto-card img[mat-card-image] {
+    height: 250px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .contenido-productos {
+    width: 95vw;
+    padding: 10px;
+  }
+
+  .productos-grid {
+    margin-left: 10vw;
+    grid-template-columns: 1fr;
+    column-gap: 15px;
+    row-gap: 20px;
+  }
+
+  .producto-card img[mat-card-image] {
+    height: 200px;
+  }
+
+  .producto-card .ver-detalles-btn,
+  .producto-card .anadir-carrito-btn,
+  .producto-card .sin-stock-btn {
+    padding: 15px 10px !important;
+    min-width: 120px;
+    font-size: 1rem;
+  }
+}
+
+.producto-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.producto-card img[mat-card-image] {
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  height: 300px;
+  margin-bottom: 16px;
+}
+
+.producto-card mat-card-header {
+  padding-bottom: 8px;
+}
+
+.producto-card mat-card-title {
+  line-height: 1.3;
+}
+.producto-card mat-card-subtitle {
+  color: #555;
+}
+
+.producto-card mat-card-content {
+  flex-grow: 1;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.producto-card mat-card-content p:first-of-type {
+  font-size: 1.25rem;
+  margin-bottom: 15px;
+}
+
+.producto-card .precio {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-success);
+  margin-top: 0;
+}
+
+.producto-card mat-card-actions {
+  padding: 8px 16px 16px 16px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.producto-card .ver-detalles-btn,
+.producto-card .anadir-carrito-btn,
+.producto-card .sin-stock-btn {
+  color: #FFFFFF;
+  padding: 25px 15px !important;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  min-width: 150px;
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.producto-card .ver-detalles-btn:hover,
+.producto-card .anadir-carrito-btn:hover {
+  transform: translateY(-1px);
+}
+
+.producto-card .ver-detalles-btn {
+  background-color: #FFFFFF;
+  color: #7E57A0;
+  border: 2px solid #7E57A0;
+}
+
+.producto-card .ver-detalles-btn:hover {
+  background-color: #f0e6f7;
+  color: #7E57A0;
+}
+
+.producto-card .anadir-carrito-btn {
+  background-color: #FFFFFF;
+  color: #FBC02D;
+  border: 2px solid #FBC02D;
+}
+
+.producto-card .anadir-carrito-btn:hover {
+  background-color: #fff9c4;
+  color: #FBC02D;
+}
+
+.stock-bajo {
+  color: orange;
+  font-size: 0.85em;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.sin-stock-texto {
+  color: #777;
+  font-size: 0.85em;
+  margin-top: 5px;
+}
+
+.producto-card mat-card-actions button {
+    flex-grow: 1;
+    margin: 0 5px;
+}
+
+.producto-card mat-card-actions button:first-child {
+    margin-left: 0;
+}
+
+.producto-card mat-card-actions button:last-child {
+    margin-right: 0;
+}
+
+.sin-stock-btn {
+  background-color: #eeeeee !important;
+  color: #aaaaaa !important;
+  cursor: not-allowed;
+  font-size: 1.5rem;
+}
+
+.producto-card mat-card-actions button[mat-icon-button] {
+  flex-grow: 0;
+}

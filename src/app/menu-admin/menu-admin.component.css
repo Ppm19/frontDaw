@@ -1,0 +1,85 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding-top: 80px;
+}
+
+.admin-menu-container {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+h1 {
+  color: var(--color-primary);
+  font-size: 3rem;
+  margin-bottom: 70px;
+  background-color: transparent !important;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.admin-card {
+  width: 350px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 8px !important;
+}
+
+.admin-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+.admin-card img[mat-card-image] {
+  height: 200px;
+  object-fit: cover;
+}
+
+.admin-card mat-card-header {
+  justify-content: center;
+}
+
+.admin-card mat-card-title {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.admin-card mat-card-content {
+  color: #666;
+  padding: 0 16px 16px;
+}
+
+.logout-container {
+  margin-top: 60px;
+  padding-bottom: 40px;
+}
+
+.logout-button {
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #fff;
+  background-color: #d32f2f;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #c00;
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+}

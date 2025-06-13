@@ -1,0 +1,62 @@
+<div class="modal-header">
+  <h2 mat-dialog-title>{{ producto.nombre }}</h2>
+  <button mat-icon-button (click)="cerrarModal()" aria-label="Cerrar diálogo de detalles">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content class="modal-content">
+  <div class="imagen-container">
+    <img [src]="getImagenPrincipal()" [alt]="producto.nombre" class="imagen-principal">
+  </div>
+
+  <div class="info-producto">
+    <h3>{{ producto.marca }}</h3>
+    <p class="descripcion">{{ producto.descripcion }}</p>
+    
+    <div class="detalle-fila">
+      <span class="detalle-label">Precio:</span>
+      <span class="precio">{{ producto.precio | currency:'EUR' }}</span>
+    </div>
+
+    <div class="detalle-fila">
+      <span class="detalle-label">Estado:</span>
+      <span>{{ producto.estadoProducto }}</span>
+    </div>
+
+    <div class="especificaciones-container" *ngIf="producto.especificaciones && producto.especificaciones.length > 0">
+        <span class="detalle-label">Especificaciones:</span>
+        <ul class="lista-especificaciones">
+            <li *ngFor="let especificacion of producto.especificaciones">
+                - {{ especificacion }}
+            </li>
+        </ul>
+    </div>
+
+    <div class="detalle-fila" *ngIf="producto.stock !== undefined">
+      <span class="detalle-label">Stock:</span>
+      <span [ngClass]="{'stock-bajo': producto.stock < 5 && producto.stock > 0, 'sin-stock': producto.stock === 0}">
+        {{ producto.stock > 0 ? (producto.stock < 5 ? '¡Últimas ' + producto.stock + ' unidades!' : producto.stock + ' disponibles') : 'Agotado' }}
+      </span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="modal-actions" align="end">
+  <button mat-stroked-button 
+          *ngIf="usuarioActual"
+          (click)="toggleListaDeseos()"
+          [ngClass]="{'btn-favorito-activo': estaEnListaDeseos, 'btn-favorito-inactivo': !estaEnListaDeseos}"
+          [matTooltip]="estaEnListaDeseos ? 'Quitar de favoritos' : 'Añadir a favoritos'">
+    <mat-icon>{{ estaEnListaDeseos ? 'favorite' : 'favorite_border' }}</mat-icon>
+    {{ estaEnListaDeseos ? 'En Favoritos' : 'Favorito' }}
+  </button>
+  
+  <button mat-flat-button 
+          color="primary" 
+          (click)="anadirAlCarrito()" 
+          [disabled]="!producto.stock || producto.stock <= 0">
+    <mat-icon>add_shopping_cart</mat-icon>
+    Añadir al Carrito
+  </button>
+</mat-dialog-actions>

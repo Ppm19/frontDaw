@@ -1,0 +1,90 @@
+.login-modal-container {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 90vw;
+  box-sizing: border-box;
+}
+
+.login-modal-container h2[mat-dialog-title],
+.login-modal-container .user-panel-title {
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.login-modal-container mat-dialog-content {
+  padding-bottom: 10px;
+}
+
+.login-modal-container mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.login-error-message {
+  background-color: var(--color-warn-light);
+  color: var(--color-warn);
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.login-modal-container mat-dialog-actions {
+  padding: 15px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.login-modal-container mat-dialog-actions.login-actions button {
+  flex-grow: 1;
+}
+
+.user-panel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+
+.user-panel-actions .user-action-button {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start; 
+  padding: 12px 15px;
+  border-color: rgba(0,0,0,0.15);
+}
+
+.user-panel-actions .user-action-button mat-icon {
+  margin-right: 12px;
+  color: var(--color-primary);
+}
+
+.login-modal-container mat-dialog-actions[align="end"] {
+  justify-content: flex-end;
+}
+
+.registro-link-container {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.9em;
+}
+
+.registro-link {
+  color: var(--color-primary);
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+
+.registro-link:hover {
+  color: var(--color-primary-dark);
+}

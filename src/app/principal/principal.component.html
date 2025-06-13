@@ -1,0 +1,115 @@
+<div class="principal-page">
+  <app-menu-inicio></app-menu-inicio>
+  <div>
+    <div class="principal-container">
+      <h1 class="titulo-superpuesto">Tu próximo móvil, al mejor precio.</h1>
+      <button class="button-container" routerLink="/productos">Ver Productos</button>
+    </div>
+
+    <div class="info-grid-section">
+      <div class="section-title-wrapper">
+        <h2>Nuestro Compromiso</h2>
+      </div>
+
+      <div class="info-grid-wrapper">
+        <div class="info-item">
+          <img src="../../assets/imagenes/icono-envios.png" alt="Envíos rápidos y seguros">
+          <div class="info-text">
+            <h3>Envíos rápidos y seguros</h3>
+            <p>Recibe tu pedido en 24/48 horas con seguimiento incluido.</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <img src="../../assets/imagenes/icono-seguro.png" alt="Garantía incluida">
+          <div class="info-text">
+            <h3>Garantía incluida</h3>
+            <p>Todos nuestros móviles reacondicionados tienen garantía mínima de 12 meses.</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <img src="../../assets/imagenes/icono-devoluciones.png" alt="Devoluciones sin complicaciones">
+          <div class="info-text">
+            <h3>Devoluciones sin complicaciones</h3>
+            <p>Tienes hasta 14 días para devolver tu compra si no estás satisfecho.</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <img src="../../assets/imagenes/icono-accesorios.png" alt="Accesorios disponibles">
+          <div class="info-text">
+            <h3>Accesorios disponibles</h3>
+            <p>Encuentra fundas, cargadores y más para tu modelo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-container">
+      <div class="marcas-carousel-section">
+        <div class="section-title-wrapper">
+          <h2>Marcas con las que trabajamos</h2>
+        </div>
+        <div class="marcas-carousel-container-single">
+          <div *ngIf="logosMarcas.length > 0" class="marca-logo-single">
+            <img [src]="logosMarcas[currentLogoIndex].src" [alt]="logosMarcas[currentLogoIndex].alt">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-area-container">
+      <div class="faq-title-wrapper">
+        <h2>Preguntas Frecuentes</h2>
+      </div>
+      <div class="faq-section">
+        <mat-accordion multi="true" class="accordion-styled">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                ¿Cuál es el estado de los móviles reacondicionados?
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Todos nuestros móviles reacondicionados son Grado A+, lo que significa que están en perfecto estado estético y funcional, casi como nuevos. Han sido revisados y certificados por nuestros técnicos.</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                ¿Qué garantía tienen los productos?
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Ofrecemos una garantía mínima de 12 meses en todos nuestros móviles reacondicionados. Algunos productos pueden tener una garantía extendida, consulta la ficha del producto para más detalles.</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                ¿Cómo funciona el proceso de envío?
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Los envíos se realizan en 24/48 horas laborables una vez confirmado el pago. Recibirás un número de seguimiento para poder ver el estado de tu pedido en todo momento.</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                ¿Puedo devolver un producto si no estoy satisfecho?
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Sí, tienes hasta 14 días naturales desde la recepción del pedido para devolverlo si no estás completamente satisfecho. Consulta nuestra política de devoluciones para más información sobre el proceso.</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                ¿Cómo añado un pedido a mi cuenta si lo hice antes de registrarme?
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Con el número de pedido que se te entregó al finalizar la compra, puedes llamar o enviar un formulario desde la pestaña de Contacto del menú para que, junto con tu email, se asignará el envío correspondiente a tu cuenta.</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

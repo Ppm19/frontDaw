@@ -1,0 +1,111 @@
+<div class="admin-productos-container">
+	<div class="header-container">
+		<h1>Gestión de Productos</h1>
+		<button mat-raised-button color="primary" (click)="abrirDialogoAnadir()">
+			<mat-icon>add</mat-icon>
+			Añadir Producto
+		</button>
+	</div>
+
+	<table mat-table [dataSource]="productos" multiTemplateDataRows class="mat-elevation-z8">
+		<ng-container matColumnDef="foto">
+			<th mat-header-cell *matHeaderCellDef>Foto</th>
+			<td mat-cell *matCellDef="let element">
+				<img [src]="element.imagenes[0]" alt="Foto de {{element.nombre}}" class="product-image" />
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="nombre">
+			<th mat-header-cell *matHeaderCellDef>Nombre</th>
+			<td mat-cell *matCellDef="let element">{{element.nombre}}</td>
+		</ng-container>
+
+		<ng-container matColumnDef="acciones">
+			<th mat-header-cell *matHeaderCellDef>Acciones</th>
+			<td mat-cell *matCellDef="let element">
+				<button mat-icon-button (click)="toggleExpand(element)" [attr.aria-label]="'Toggle ' + element.nombre">
+					<mat-icon>{{expandedElement === element ? 'expand_less' : 'expand_more'}}</mat-icon>
+				</button>
+				<button mat-icon-button color="warn" (click)="eliminarProducto(element._id!)">
+					<mat-icon>delete</mat-icon>
+				</button>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="expandedDetail">
+			<td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+				<div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+					<form [formGroup]="editForm" (ngSubmit)="guardarCambios()" class="edit-form">
+						<div class="form-row">
+							<mat-form-field appearance="fill">
+								<mat-label>Nombre</mat-label>
+								<input matInput formControlName="nombre" />
+							</mat-form-field>
+							<mat-form-field appearance="fill">
+								<mat-label>Marca</mat-label>
+								<input matInput formControlName="marca" />
+							</mat-form-field>
+						</div>
+
+						<mat-form-field appearance="fill" class="full-width">
+							<mat-label>Descripción</mat-label>
+							<textarea matInput formControlName="descripcion"></textarea>
+						</mat-form-field>
+
+						<div class="form-row">
+							<mat-form-field appearance="fill">
+								<mat-label>Precio</mat-label>
+								<input matInput type="number" formControlName="precio" />
+							</mat-form-field>
+							<mat-form-field appearance="fill">
+								<mat-label>Stock</mat-label>
+								<input matInput type="number" formControlName="stock" />
+							</mat-form-field>
+						</div>
+
+						<div class="form-row">
+							<mat-form-field appearance="fill">
+								<mat-label>Categoría</mat-label>
+								<mat-select formControlName="categoria">
+									<mat-option *ngFor="let cat of categorias" [value]="cat">{{cat}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<mat-form-field appearance="fill">
+								<mat-label>Estado</mat-label>
+								<mat-select formControlName="estadoProducto">
+									<mat-option *ngFor="let estado of estadosProducto" [value]="estado">{{estado}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+
+						<mat-form-field appearance="fill" class="full-width">
+							<mat-label>Especificaciones (separadas por coma)</mat-label>
+							<textarea matInput formControlName="especificaciones"></textarea>
+						</mat-form-field>
+
+						<mat-form-field appearance="fill" class="full-width">
+							<mat-label>URLs de Imágenes (separadas por coma)</mat-label>
+							<textarea matInput formControlName="imagenes"></textarea>
+						</mat-form-field>
+
+						<div class="form-actions">
+							<button mat-stroked-button (click)="toggleExpand(element)" type="button">Cancelar</button>
+							<button mat-raised-button color="primary" type="submit">Guardar Cambios</button>
+						</div>
+					</form>
+				</div>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element"></tr>
+		<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+	</table>
+
+	<div class="back-to-menu-container">
+		<button mat-stroked-button color="primary" (click)="volverAlMenu()">
+			<mat-icon>arrow_back</mat-icon>
+			Volver al Menú de Administración
+		</button>
+	</div>
+</div>

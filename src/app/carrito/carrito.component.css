@@ -1,0 +1,16 @@
+.carrito-flotante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+.carrito-flotante.mat-primary .mat-icon {
+  color: var(--color-text-on-primary);
+}
+
+.carrito-flotante.mat-primary {
+  background-color: var(--color-primary);
+}

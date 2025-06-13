@@ -1,0 +1,182 @@
+<app-menu-inicio></app-menu-inicio>
+
+<div class="perfil-container">
+  <h1>Mi Perfil</h1>
+
+  <div *ngIf="usuario; else noUsuario" class="datos-usuario-card card-base">
+    <h2>Datos Personales</h2>
+
+    <ng-container *ngIf="!modoEdicion">
+      <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+      <p><strong>Primer Apellido:</strong> {{ usuario.primerApellido }}</p>
+      <p *ngIf="usuario.segundoApellido"><strong>Segundo Apellido:</strong> {{ usuario.segundoApellido }}</p>
+      <p><strong>Email:</strong> {{ usuario.email }}</p>
+      <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+    </ng-container>
+
+    <!-- MODO EDICIÓN -->
+    <ng-container *ngIf="modoEdicion">
+      <form [formGroup]="perfilForm" (ngSubmit)="guardarCambiosPerfil()">
+        <mat-form-field appearance="outline" class="full-width-form-field">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-form-field">
+          <mat-label>Primer Apellido</mat-label>
+          <input matInput formControlName="primerApellido" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-form-field">
+          <mat-label>Segundo Apellido</mat-label>
+          <input matInput formControlName="segundoApellido">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-form-field">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-form-field">
+          <mat-label>Teléfono</mat-label>
+          <input matInput type="tel" formControlName="telefono" required>
+        </mat-form-field>
+
+        <h3>Cambiar Contraseña (opcional)</h3>
+        <mat-form-field appearance="outline" class="full-width-form-field">
+          <mat-label>Nueva Contraseña</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Dejar en blanco para no cambiar">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-form-field">
+          <mat-label>Confirmar Nueva Contraseña</mat-label>
+          <input matInput type="password" formControlName="confirmarPassword" placeholder="Dejar en blanco para no cambiar">
+          <mat-error *ngIf="perfilForm.get('confirmarPassword')?.hasError('passwordsMismatch') && perfilForm.get('confirmarPassword')?.touched">
+            Las contraseñas no coinciden.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="acciones-formulario-edicion">
+          <button type="submit" mat-stroked-button color="primary" class="btn-editar-perfil" [disabled]="perfilForm.invalid">Guardar Cambios</button>
+          <button type="button" mat-stroked-button color="warn" (click)="cancelarEdicionPerfil()" class="btn-editar-perfil">Cancelar</button>
+        </div>
+      </form>
+    </ng-container>
+
+    <div class="acciones-perfil" *ngIf="!modoEdicion">
+      <button mat-stroked-button color="primary" (click)="editarPerfil()" class="btn-editar-perfil">Editar Perfil</button>
+    </div>
+
+    <div class="seccion-direcciones-header">
+      <h3>Direcciones:</h3>
+      <button mat-stroked-button class="btn-accion-direccion" (click)="anadirDireccion()" *ngIf="!mostrandoFormularioNuevaDireccion && !modoEdicion">Añadir Dirección</button>
+    </div>
+
+    <div *ngIf="mostrandoFormularioNuevaDireccion" class="formulario-nueva-direccion">
+      <mat-form-field appearance="outline" class="full-width-form-field">
+        <mat-label>Nueva dirección</mat-label>
+        <input matInput type="text" [(ngModel)]="nuevaDireccionInput" name="nuevaDireccionInputName" placeholder="Ej: Calle Falsa 123, Ciudad, CP" required>
+      </mat-form-field>
+      <div class="acciones-formulario-direccion">
+        <button mat-stroked-button class="btn-accion-direccion" (click)="guardarNuevaDireccion()" [disabled]="!nuevaDireccionInput.trim()">Guardar Dirección</button>
+        <button mat-button (click)="cancelarNuevaDireccion()">Cancelar</button>
+      </div>
+    </div>
+
+    <div *ngIf="usuario.direcciones && usuario.direcciones.length > 0 && !mostrandoFormularioNuevaDireccion" class="lista-direcciones-container">
+      <ul>
+        <li *ngFor="let dir of usuario.direcciones" class="direccion-item">
+          <span>{{ dir }}</span>
+          <button mat-icon-button color="warn" (click)="eliminarDireccion(dir)" aria-label="Eliminar dirección" [disabled]="modoEdicion">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <p *ngIf="(!usuario.direcciones || usuario.direcciones.length === 0) && !mostrandoFormularioNuevaDireccion" class="sin-direcciones-mensaje">No tienes direcciones guardadas.</p>
+  </div>
+
+  <ng-template #noUsuario>
+    <div class="no-usuario-mensaje">
+      <p>No se ha podido cargar la información del perfil o no has iniciado sesión.</p>
+    </div>
+  </ng-template>
+
+  <div class="lista-deseos-container card-base" *ngIf="usuario">
+    <h2>Mi Lista de Deseados</h2>
+    <div *ngIf="isLoadingListaDeseos" class="loading-indicator">
+      Cargando tu lista de deseos...
+    </div>
+    <div *ngIf="!isLoadingListaDeseos && (!productosListaDeseos || productosListaDeseos.length === 0)" class="info-no-elementos">
+      Tu lista de deseos está vacía. Añade productos que te gusten para verlos aquí.
+    </div>
+    <div class="productos-grid-deseos" *ngIf="!isLoadingListaDeseos && productosListaDeseos && productosListaDeseos.length > 0">
+      <mat-card class="producto-card-deseos" *ngFor="let producto of productosListaDeseos">
+        <img mat-card-image
+             [src]="producto.imagenes && producto.imagenes.length > 0 ? producto.imagenes[0] : 'assets/placeholder-image.png'"
+             [alt]="producto.nombre"
+             (click)="verDetallesProductoEnLista(producto)"
+             style="cursor: pointer; object-fit: cover; aspect-ratio: 1 / 1; max-height: 200px;"
+             onError="this.src='assets/placeholder-image.png'">
+        <mat-card-header (click)="verDetallesProductoEnLista(producto)" style="cursor: pointer;">
+          <mat-card-title>{{ producto.nombre }}</mat-card-title>
+          <mat-card-subtitle>{{ producto.marca }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="precio">{{ producto.precio | currency:'EUR':'symbol' }}</p>
+        </mat-card-content>
+        <mat-card-actions class="acciones-card-deseos">
+          <button mat-stroked-button color="primary" (click)="verDetallesProductoEnLista(producto)" class="btn-accion-card-deseos">Ver Detalles</button>
+          <button mat-stroked-button class="btn-accion-card-deseos btn-add-carrito-deseos"
+                  (click)="anadirAlCarritoYQuitarDeDeseos(producto)"
+                  [disabled]="!producto.stock || producto.stock <= 0">
+            <mat-icon>add_shopping_cart</mat-icon> Al Carrito
+          </button>
+          <button mat-icon-button color="warn" (click)="eliminarDeListaDeseos(producto._id!)" matTooltip="Eliminar de favoritos" class="btn-eliminar-deseos">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  
+  <div class="contenedor-pedidos card-base" *ngIf="usuario">
+    <h2>Mis Pedidos</h2>
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Pedidos Pendientes ({{pedidosPendientes.length}})">
+        <ng-template matTabContent>
+          <div *ngIf="pedidosPendientes.length > 0; else noPendientes">
+            <div *ngFor="let pedido of pedidosPendientes" class="pedido-item">
+              <p><strong>ID Pedido:</strong> {{pedido._id}}</p>
+              <p><strong>Fecha:</strong> {{pedido.createdAt | date:'dd/MM/yyyy HH:mm'}}</p>
+              <p><strong>Dirección de Envío:</strong> {{pedido.direccionEnvio}}</p>
+              <p><strong>Total:</strong> {{pedido.totalPedido | currency:'EUR'}}</p>
+              <p><strong>Estado:</strong> <span class="estado-{{pedido.estadoPedido.toLowerCase()}}">{{pedido.estadoPedido}}</span></p>
+            </div>
+          </div>
+          <ng-template #noPendientes>
+            <p class="info-no-pedidos">No tienes pedidos pendientes.</p>
+          </ng-template>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Pedidos Aceptados ({{pedidosAceptados.length}})">
+        <ng-template matTabContent>
+          <div *ngIf="pedidosAceptados.length > 0; else noAceptados">
+            <div *ngFor="let pedido of pedidosAceptados" class="pedido-item">
+              <p><strong>ID Pedido:</strong> {{pedido._id}}</p>
+              <p><strong>Fecha:</strong> {{pedido.createdAt | date:'dd/MM/yyyy HH:mm'}}</p>
+              <p><strong>Dirección de Envío:</strong> {{pedido.direccionEnvio}}</p>
+              <p><strong>Total:</strong> {{pedido.totalPedido | currency:'EUR'}}</p>
+              <p><strong>Estado:</strong> <span class="estado-{{pedido.estadoPedido.toLowerCase()}}">{{pedido.estadoPedido}}</span></p>
+            </div>
+          </div>
+          <ng-template #noAceptados>
+            <p class="info-no-pedidos">No tienes pedidos aceptados.</p>
+          </ng-template>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+</div>

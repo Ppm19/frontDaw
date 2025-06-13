@@ -1,0 +1,28 @@
+<div class="admin-menu-container">
+  <h1>Panel de Administración</h1>
+  <div class="cards-container">
+    <mat-card class="admin-card" (click)="navigateTo('/admin-productos')">
+      <img mat-card-image src="../../assets/imagenes/productos-admin.png" alt="Productos">
+      <mat-card-header>
+        <mat-card-title>Productos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gestiona el catálogo de productos, añade nuevos artículos, edita precios y controla el stock.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="admin-card" (click)="navigateTo('/admin-pedidos')">
+      <img mat-card-image src="../../assets/imagenes/pedidos-admin.png" alt="Pedidos">
+      <mat-card-header>
+        <mat-card-title>Pedidos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Revisa los pedidos entrantes, actualiza sus estados y gestiona la información de los clientes.</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="logout-container">
+    <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+  </div>
+</div>

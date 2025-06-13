@@ -1,0 +1,166 @@
+
+:host {
+  display: block;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.realizar-pedido-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+h1 {
+  text-align: center;
+  color: var(--color-primary);
+  font-size: 2.8rem;
+  margin-bottom: 40px;
+  font-weight: 500;
+  background-color: transparent !important;
+}
+
+h2 {
+  color: var(--color-primary);
+  font-size: 1.8rem;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+}
+
+.card-base {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  margin-bottom: 40px;
+}
+
+.resumen-pedido-section .lista-items-carrito {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-carrito {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-carrito:last-child {
+  border-bottom: none;
+}
+
+.item-imagen img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-detalles {
+  flex-grow: 1;
+}
+
+.item-detalles h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.item-detalles p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.item-subtotal p {
+  text-align: right;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  min-width: 120px;
+}
+
+.total-carrito-resumen {
+  text-align: right;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 2px solid var(--color-primary);
+}
+
+.total-carrito-resumen h3 {
+  font-size: 1.6rem;
+  color: var(--color-success);
+  font-weight: bold;
+}
+
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(125, 33, 145, 0.15);
+  outline: none;
+}
+
+.error-mensaje small {
+  color: #e53935;
+  margin-top: 5px;
+  display: block;
+}
+
+.acciones-formulario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.acciones-formulario button {
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+  border-radius: 4px;
+}
+
+.acciones-formulario button[mat-stroked-button] {
+    border-width: 2px;
+}
+
+.carrito-vacio-mensaje {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+}
+
+.carrito-vacio-mensaje a {
+  color: var(--color-primary);
+  font-weight: bold;
+  text-decoration: none;
+}

@@ -1,0 +1,31 @@
+<mat-toolbar class="menu-toolbar">
+  <button mat-icon-button class="menu-toggle" (click)="toggleMobileMenu()" *ngIf="isMobile">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <div class="toolbar-section-placeholder" [class.mobile]="isMobile"></div>
+
+  <div class="centered-buttons-wrapper" [class.mobile-hidden]="isMobile">
+    <div class="button-container">
+      <button mat-button routerLink="/">Home</button>
+      <button mat-button routerLink="/productos/moviles">Móviles</button>
+      <button mat-button routerLink="/productos/accesorios">Accesorios</button>
+      <button mat-button routerLink="/contacto">Contacto</button>
+    </div>
+  </div>
+
+  <button #profileButton mat-icon-button aria-label="Botón de perfil de usuario" class="profile-button" (click)="toggleLoginDropdown()">
+    <mat-icon id="icono-perfil">account_circle</mat-icon>
+  </button>
+
+  <div class="mobile-menu" [class.show-mobile-menu]="mobileMenuOpen">
+    <div class="mobile-menu-content">
+      <div class="button-container mobile">
+        <button mat-button routerLink="/" (click)="toggleMobileMenu()">Home</button>
+        <button mat-button routerLink="/productos/moviles" (click)="toggleMobileMenu()">Móviles</button>
+        <button mat-button routerLink="/productos/accesorios" (click)="toggleMobileMenu()">Accesorios</button>
+        <button mat-button routerLink="/contacto" (click)="toggleMobileMenu()">Contacto</button>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

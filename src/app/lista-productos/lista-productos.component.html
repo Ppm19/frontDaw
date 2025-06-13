@@ -1,0 +1,60 @@
+<app-menu-productos></app-menu-productos>
+
+<div class="contenido-productos">
+  <div *ngIf="isLoading" class="loading-indicator">
+    Cargando productos...
+  </div>
+
+  <div *ngIf="errorMensaje" class="error-mensaje">
+    {{ errorMensaje }}
+  </div>
+
+  <div *ngIf="!isLoading && !errorMensaje && productos.length === 0" class="productos-vacios">
+    No hay productos disponibles en este momento.
+  </div>
+
+  <div class="search-container" *ngIf="!isLoading && !errorMensaje">
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar producto</mat-label>
+      <input matInput type="text" [(ngModel)]="terminoBusqueda" (ngModelChange)="aplicarFiltro()" placeholder="Ej. iPhone 15">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="productos-grid" *ngIf="!isLoading && !errorMensaje && productosFiltrados.length > 0">
+    <mat-card class="producto-card" *ngFor="let producto of productosFiltrados">
+      <img mat-card-image
+           [src]="producto.imagenes && producto.imagenes.length > 0 ? producto.imagenes[0] : 'assets/placeholder-image.png'"
+           [alt]="producto.nombre">
+      <mat-card-header>
+        <mat-card-title>{{ producto.nombre }}</mat-card-title>
+        <mat-card-subtitle>{{ producto.marca }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Estado:</strong> {{ producto.estadoProducto }}</p>
+        <p class="precio">{{ producto.precio | currency:'EUR':'symbol' }}</p>
+        <p *ngIf="producto.stock <= 5 && producto.stock > 0" class="stock-bajo">¡Últimas unidades!</p>
+        <p *ngIf="producto.stock === 0" class="sin-stock-texto">Producto no disponible</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="primary" (click)="mostrarDetalles(producto)">VER DETALLES</button>
+        <ng-container *ngIf="producto.stock > 0; else sinStock">
+          <button mat-stroked-button color="accent" (click)="anadirAlCarrito(producto)">
+            AÑADIR AL CARRITO
+          </button>
+        </ng-container>
+        <ng-template #sinStock>
+          <button mat-button class="sin-stock-btn" disabled>
+            SIN STOCK
+          </button>
+        </ng-template>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div *ngIf="!isLoading && productosFiltrados.length === 0 && productos.length > 0" class="productos-vacios">
+    No se encontraron productos con ese nombre.
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

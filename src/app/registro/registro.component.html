@@ -1,0 +1,85 @@
+<div class="registro-dialog-container">
+  <h1 mat-dialog-title class="registro-titulo">Crear Cuenta</h1>
+  <mat-dialog-content class="mat-typography">
+    <mat-stepper orientation="vertical" [linear]="true" #stepper>
+      <mat-step [stepControl]="formPaso1">
+        <form [formGroup]="formPaso1">
+          <ng-template matStepLabel>Credenciales de Acceso</ng-template>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required>
+            <mat-error *ngIf="formPaso1.get('email')?.hasError('required')">El email es obligatorio.</mat-error>
+            <mat-error *ngIf="formPaso1.get('email')?.hasError('email')">Introduce un email válido.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <input matInput formControlName="password" type="password" required>
+            <mat-error *ngIf="formPaso1.get('password')?.hasError('required')">La contraseña es obligatoria.</mat-error>
+            <mat-error *ngIf="formPaso1.get('password')?.hasError('minlength')">La contraseña debe tener al menos 6 caracteres.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Confirmar Contraseña</mat-label>
+            <input matInput formControlName="confirmarPassword" type="password" required>
+            <mat-error *ngIf="formPaso1.get('confirmarPassword')?.hasError('required')">Confirma tu contraseña.</mat-error>
+            <mat-error *ngIf="formPaso1.get('confirmarPassword')?.hasError('passwordsMismatch')">Las contraseñas no coinciden.</mat-error>
+          </mat-form-field>
+          
+          <div class="step-actions">
+            <button mat-stroked-button color="primary" matStepperNext>Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="formPaso2">
+        <form [formGroup]="formPaso2">
+          <ng-template matStepLabel>Datos Personales</ng-template>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" required>
+            <mat-error *ngIf="formPaso2.get('nombre')?.hasError('required')">El nombre es obligatorio.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Primer Apellido</mat-label>
+            <input matInput formControlName="primerApellido" required>
+            <mat-error *ngIf="formPaso2.get('primerApellido')?.hasError('required')">El primer apellido es obligatorio.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Segundo Apellido (Opcional)</mat-label>
+            <input matInput formControlName="segundoApellido">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Teléfono</mat-label>
+            <input matInput formControlName="telefono" type="tel" required>
+            <mat-error *ngIf="formPaso2.get('telefono')?.hasError('required')">El teléfono es obligatorio.</mat-error>
+            <mat-error *ngIf="formPaso2.get('telefono')?.hasError('pattern')">Introduce un número de teléfono válido (9 dígitos).</mat-error>
+          </mat-form-field>
+          
+          <div class="step-actions">
+            <button mat-stroked-button matStepperPrevious>Anterior</button>
+            <button mat-stroked-button color="primary" matStepperNext>Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Método de Pago</ng-template>
+        <p class="info-pago">Aquí iría la lógica para guardar un método de pago (próximamente).</p>
+        <p class="info-pago">Puedes completar tu registro ahora y añadir un método de pago más tarde desde tu perfil.</p>
+        <div class="step-actions">
+          <button mat-stroked-button matStepperPrevious>Anterior</button>
+          <button mat-flat-button color="primary" (click)="registrarse()">Completar Registro</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="cerrarDialog()">Cancelar Registro</button>
+  </mat-dialog-actions>
+</div>

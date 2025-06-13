@@ -1,0 +1,100 @@
+
+<div class="realizar-pedido-container">
+  <h1>Finalizar Compra</h1>
+
+  <div class="resumen-pedido-section card-base" *ngIf="itemsCarrito.length > 0">
+    <h2>Resumen de tu Pedido</h2>
+    <ul class="lista-items-carrito">
+      <li *ngFor="let item of itemsCarrito" class="item-carrito">
+        <div class="item-imagen">
+          <img [src]="item.producto.imagenes[0] || 'assets/placeholder.png'" [alt]="item.producto.nombre">
+        </div>
+        <div class="item-detalles">
+          <h3>{{ item.producto.nombre }}</h3>
+          <p>Marca: {{ item.producto.marca }}</p>
+          <p class="descripcion-corta">{{ item.producto.descripcion | slice:0:100 }}...</p>
+          <p>Estado: {{ item.producto.estadoProducto }}</p>
+          <p>Precio Unitario: {{ item.producto.precio | currency:'EUR' }}</p>
+          <p>Cantidad: {{ item.cantidad }}</p>
+        </div>
+        <div class="item-subtotal">
+          <p>Subtotal: {{ (item.producto.precio * item.cantidad) | currency:'EUR' }}</p>
+        </div>
+      </li>
+    </ul>
+    <div class="total-carrito-resumen">
+      <h3>Total del Pedido: {{ totalCarrito | currency:'EUR' }}</h3>
+    </div>
+  </div>
+
+  <div *ngIf="itemsCarrito.length === 0" class="carrito-vacio-mensaje">
+    <p>Tu carrito está vacío. <a routerLink="/productos">Sigue comprando</a>.</p>
+  </div>
+
+  <div class="formulario-comprador-section card-base" *ngIf="itemsCarrito.length > 0">
+    <h2>Datos de Envío y Contacto</h2>
+    <form [formGroup]="pedidoForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="nombreCompletoComprador">Nombre Completo*</label>
+        <input id="nombreCompletoComprador" type="text" formControlName="nombreCompletoComprador" class="form-control">
+        <div *ngIf="nombreCompletoComprador?.invalid && (nombreCompletoComprador?.dirty || nombreCompletoComprador?.touched)" class="error-mensaje">
+          <small *ngIf="nombreCompletoComprador?.errors?.['required']">El nombre es obligatorio.</small>
+          <small *ngIf="nombreCompletoComprador?.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="emailComprador">Email*</label>
+        <input id="emailComprador" type="email" formControlName="emailComprador" class="form-control">
+        <div *ngIf="emailComprador?.invalid && (emailComprador?.dirty || emailComprador?.touched)" class="error-mensaje">
+          <small *ngIf="emailComprador?.errors?.['required']">El email es obligatorio.</small>
+          <small *ngIf="emailComprador?.errors?.['email']">Introduce un email válido.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefonoComprador">Teléfono*</label>
+        <input id="telefonoComprador" type="tel" formControlName="telefonoComprador" class="form-control">
+        <div *ngIf="telefonoComprador?.invalid && (telefonoComprador?.dirty || telefonoComprador?.touched)" class="error-mensaje">
+          <small *ngIf="telefonoComprador?.errors?.['required']">El teléfono es obligatorio.</small>
+          <small *ngIf="telefonoComprador?.errors?.['pattern']">Introduce un número de teléfono válido.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="direccionEnvio">Dirección de Envío*</label>
+
+        <div *ngIf="usuarioActual && usuarioActual.direcciones && usuarioActual.direcciones.length > 0" class="direccion-selector">
+          <select (change)="onAddressSelect($event)" class="form-control mb-2">
+            <option value="">-- Selecciona una dirección guardada --</option>
+            <option *ngFor="let dir of usuarioActual.direcciones" [value]="dir">{{ dir }}</option>
+
+          </select>
+        </div>
+
+        <input id="direccionEnvio" type="text" formControlName="direccionEnvio" class="form-control" placeholder="Calle, Número, Ciudad, Código Postal">
+        <div *ngIf="direccionEnvio?.invalid && (direccionEnvio?.dirty || direccionEnvio?.touched)" class="error-mensaje">
+          <small *ngIf="direccionEnvio?.errors?.['required']">La dirección de envío es obligatoria.</small>
+          <small *ngIf="direccionEnvio?.errors?.['minlength']">La dirección debe tener al menos 5 caracteres.</small>
+        </div>
+      </div>
+
+      <div class="acciones-formulario">
+        <button type="button" mat-stroked-button color="primary" routerLink="/productos">
+          Seguir Comprando
+        </button>
+        <button type="submit" mat-flat-button color="primary" [disabled]="pedidoForm.invalid || isLoading || itemsCarrito.length === 0">
+          <span *ngIf="!isLoading">Finalizar Pedido y Pagar</span>
+          <span *ngIf="isLoading">Procesando Pedido...</span>
+        </button>
+      </div>
+
+      <div *ngIf="isLoading" class="loading-indicator">
+        <p>Por favor, espera mientras procesamos tu pedido...</p>
+      </div>
+
+    </form>
+  </div>
+
+</div>

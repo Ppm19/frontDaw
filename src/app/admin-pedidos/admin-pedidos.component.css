@@ -1,0 +1,140 @@
+.admin-pedidos-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+h1 {
+  color: var(--color-primary);
+  margin-bottom: 2rem;
+  font-size: 2.8rem;
+  font-weight: 500;
+  text-align: center;
+  background-color: transparent !important;
+}
+
+.spinner-container, .no-pedidos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.mat-accordion .mat-expansion-panel {
+    background-color: white;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+}
+
+.mat-accordion .mat-expansion-panel.mat-expanded {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+mat-expansion-panel-header {
+  font-size: 1rem;
+}
+
+.mat-panel-title {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.mat-expansion-panel-header-description {
+    justify-content: flex-end;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions button[color="primary"] {
+    color: var(--color-primary);
+}
+
+.pedido-details {
+  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.pedido-details h4 {
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 8px;
+}
+
+.pedido-details p {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.articles-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.articles-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.articles-list li:last-child {
+  border-bottom: none;
+}
+
+.articles-list .quantity {
+  font-weight: bold;
+  flex-basis: 10%;
+  color: #333;
+}
+
+.articles-list .name {
+  flex-basis: 60%;
+  color: #555;
+}
+
+.articles-list .price {
+  flex-basis: 30%;
+  text-align: right;
+  font-weight: 500;
+}
+
+.total-final {
+  text-align: right;
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--color-primary);
+  color: var(--color-success);
+}
+
+.back-to-menu-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+.back-to-menu-container button {
+  padding: 10px 24px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-width: 2px;
+}
+
+.back-to-menu-container mat-icon {
+  margin-right: 8px;
+}

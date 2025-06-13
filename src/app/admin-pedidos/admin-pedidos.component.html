@@ -1,0 +1,57 @@
+<div class="admin-pedidos-container">
+  <h1>Gestión de Pedidos Pendientes</h1>
+
+  <div *ngIf="isLoading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && pedidosPendientes.length === 0" class="no-pedidos">
+    <p>¡Genial! No hay pedidos pendientes por revisar.</p>
+  </div>
+
+  <mat-accordion *ngIf="!isLoading && pedidosPendientes.length > 0">
+    <mat-expansion-panel *ngFor="let pedido of pedidosPendientes; let i = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Pedido #{{ i + 1 }} - {{ pedido.nombreCompletoComprador }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <span class="actions">
+            <button mat-icon-button color="primary" title="Aceptar Pedido" (click)="aceptarPedido(pedido._id!); $event.stopPropagation()">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" title="Rechazar Pedido" (click)="rechazarPedido(pedido._id!); $event.stopPropagation()">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="pedido-details">
+        <h4>Dirección de Envío</h4>
+        <p>{{ pedido.direccionEnvio }}</p>
+        
+        <h4>Artículos del Pedido</h4>
+        <ul class="articles-list">
+          <li *ngFor="let item of pedido.articulos">
+            <span class="quantity">{{ item.cantidad }}x</span>
+            <span class="name">{{ item.nombreProducto }}</span>
+            <span class="price">{{ item.precioAlComprar | currency:'EUR' }}</span>
+          </li>
+        </ul>
+        
+        <div class="total-final">
+          <strong>Total: {{ pedido.totalPedido | currency:'EUR' }}</strong>
+        </div>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div class="back-to-menu-container">
+    <button mat-stroked-button color="primary" (click)="volverAlMenu()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver al Menú de Administración
+    </button>
+  </div>
+</div>

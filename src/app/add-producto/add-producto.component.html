@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>Añadir Nuevo Producto</h1>
+<div mat-dialog-content>
+	<form [formGroup]="addForm" class="add-form">
+		<div class="form-row">
+			<mat-form-field appearance="outline">
+				<mat-label>Nombre del Producto</mat-label>
+				<input matInput formControlName="nombre" />
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>Marca</mat-label>
+				<input matInput formControlName="marca" />
+			</mat-form-field>
+		</div>
+
+		<mat-form-field appearance="outline" class="full-width">
+			<mat-label>Descripción</mat-label>
+			<textarea matInput formControlName="descripcion" rows="3"></textarea>
+		</mat-form-field>
+
+		<div class="form-row">
+			<mat-form-field appearance="outline">
+				<mat-label>Precio</mat-label>
+				<input matInput type="number" formControlName="precio" />
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>Stock Inicial</mat-label>
+				<input matInput type="number" formControlName="stock" />
+			</mat-form-field>
+		</div>
+
+		<div class="form-row">
+			<mat-form-field appearance="outline">
+				<mat-label>Categoría</mat-label>
+				<mat-select formControlName="categoria">
+					<mat-option *ngFor="let cat of categorias" [value]="cat">{{cat}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field appearance="outline">
+				<mat-label>Estado</mat-label>
+				<mat-select formControlName="estadoProducto">
+					<mat-option *ngFor="let estado of estadosProducto" [value]="estado">{{estado}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<mat-form-field appearance="outline" class="full-width">
+			<mat-label>Especificaciones (separadas por coma)</mat-label>
+			<textarea matInput formControlName="especificaciones" rows="2" placeholder="Ej: Pantalla 6.1 pulgadas, Cámara 12MP, ..."></textarea>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline" class="full-width">
+			<mat-label>URLs de Imágenes (separadas por coma)</mat-label>
+			<textarea matInput formControlName="imagenes" rows="2" placeholder="Ej: /assets/img1.jpg, /assets/img2.jpg, ..."></textarea>
+		</mat-form-field>
+	</form>
+</div>
+<div mat-dialog-actions align="end">
+	<button mat-stroked-button (click)="onCancel()">Cancelar</button>
+	<button mat-raised-button color="primary" (click)="onSave()" [disabled]="addForm.invalid">Crear Producto</button>
+</div>

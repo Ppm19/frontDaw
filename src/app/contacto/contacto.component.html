@@ -1,0 +1,51 @@
+<app-menu-inicio></app-menu-inicio>
+
+<div class="contacto-page-container">
+  <div class="form-container card-base">
+    <h2>Contacto</h2>
+    <p class="subtitulo">¿Tienes alguna duda? Rellena el formulario y te responderemos lo antes posible.</p>
+
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="email">Email*</label>
+        <input id="email" type="email" formControlName="email" class="form-control" placeholder="tu@email.com">
+        <div *ngIf="contactForm.get('email')?.invalid && (contactForm.get('email')?.touched || contactForm.get('email')?.dirty)" class="error-mensaje">
+          <small *ngIf="contactForm.get('email')?.errors?.['required']">El email es obligatorio.</small>
+          <small *ngIf="contactForm.get('email')?.errors?.['email']">Por favor, introduce un email válido.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tipo">Tipo de consulta*</label>
+        <select id="tipo" formControlName="tipo" class="form-control">
+          <option [ngValue]="null" disabled selected>-- Selecciona un tipo de consulta --</option>
+          <option *ngFor="let tipo of tiposConsulta" [value]="tipo.value">
+            {{tipo.label}}
+          </option>
+        </select>
+        <div *ngIf="contactForm.get('tipo')?.invalid && (contactForm.get('tipo')?.touched || contactForm.get('tipo')?.dirty)" class="error-mensaje">
+          <small *ngIf="contactForm.get('tipo')?.errors?.['required']">Por favor, selecciona un tipo de consulta.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">Descripción*</label>
+        <textarea id="descripcion" formControlName="descripcion" class="form-control" placeholder="Describe aquí tu duda o incidencia..." rows="5"></textarea>
+        <div *ngIf="contactForm.get('descripcion')?.invalid && (contactForm.get('descripcion')?.touched || contactForm.get('descripcion')?.dirty)" class="error-mensaje">
+          <small *ngIf="contactForm.get('descripcion')?.errors?.['required']">La descripción es obligatoria.</small>
+          <small *ngIf="contactForm.get('descripcion')?.errors?.['minlength']">La descripción debe tener al menos 10 caracteres.</small>
+        </div>
+      </div>
+
+      <div class="acciones-formulario">
+        <button type="submit" mat-flat-button color="primary" [disabled]="contactForm.invalid">
+          Enviar Consulta
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

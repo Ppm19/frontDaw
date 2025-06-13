@@ -1,0 +1,53 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="cerrarModal()"></div>
+<div class="modal-container" *ngIf="isVisible">
+  <mat-card class="modal-content">
+    <mat-card-header class="modal-header">
+      <mat-card-title>Carrito</mat-card-title>
+      <button mat-icon-button (click)="cerrarModal()" aria-label="Cerrar modal del carrito">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
+
+    <mat-card-content class="modal-body">
+      <div *ngIf="!carrito || carrito.items.length === 0; else itemsList" class="carrito-vacio">
+        <mat-icon>remove_shopping_cart</mat-icon>
+        <p>Tu carrito está vacío.</p>
+        <button mat-stroked-button class="btn-modal-outline-morado" (click)="cerrarModal()">Seguir comprando</button>
+      </div>
+
+      <ng-template #itemsList>
+        <mat-list class="items-list">
+          <mat-list-item *ngFor="let item of carrito?.items" class="item-carrito">
+            <img matListItemAvatar [src]="item.producto.imagenes && item.producto.imagenes.length > 0 ? item.producto.imagenes[0] : 'assets/placeholder-image.png'" [alt]="item.producto.nombre" class="item-imagen">
+            <div matListItemTitle class="item-nombre">{{ item.producto.nombre }}</div>
+            <div matListItemLine class="item-precio">{{ item.producto.precio | currency:'EUR':'symbol' }}</div>
+            <div matListItemLine class="item-cantidad-controles">
+              <button mat-icon-button (click)="decrementarCantidad(item)" aria-label="Decrementar cantidad">
+                <mat-icon>remove_circle_outline</mat-icon>
+              </button>
+              <span>{{ item.cantidad }}</span>
+              <button mat-icon-button (click)="incrementarCantidad(item)" aria-label="Incrementar cantidad">
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+            </div>
+            <div matListItemMeta class="item-subtotal">
+              {{ (item.producto.precio * item.cantidad) | currency:'EUR':'symbol' }}
+            </div>
+            <button mat-icon-button color="warn" (click)="eliminarItem(item.producto._id!)" aria-label="Eliminar item del carrito" class="item-eliminar-btn">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+
+        <div class="carrito-total">
+          <h3>Total: {{ carrito?.total | currency:'EUR':'symbol' }}</h3>
+        </div>
+      </ng-template>
+    </mat-card-content>
+
+    <mat-card-actions class="modal-actions" *ngIf="carrito && carrito.items.length > 0">
+      <button mat-stroked-button color="warn" (click)="vaciarCarrito()">Vaciar Carrito</button>
+      <button mat-stroked-button color="primary" (click)="procederAlPago()">Proceder al Pago</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

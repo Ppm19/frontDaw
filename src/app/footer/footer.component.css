@@ -1,0 +1,128 @@
+.site-footer {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+  padding: 40px 20px 20px;
+  /* font-size: 0.9rem; */
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+.footer-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto 30px auto;
+}
+
+.footer-column {
+  margin-bottom: 20px;
+}
+
+.footer-tienda {
+  flex-basis: 280px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.footer-tienda h4 {
+  border-bottom-width: 1px !important;
+  width: 50%;
+}
+
+.footer-contacto-info {
+  flex-grow: 1;
+  text-align: center;
+  min-width: 250px;
+  padding: 0 20px;
+}
+
+.footer-legal {
+  flex-basis: 280px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.footer-column h4 {
+  color: var(--color-text-on-primary);
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 10px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a,
+.footer-contacto-info p a {
+  color: var(--color-text-on-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover,
+.footer-contacto-info p a:hover {
+  color: var(--color-text-on-primary);
+  text-decoration: underline;
+}
+
+.footer-contacto-info p {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 1rem;
+  color: #E0E0E0;
+}
+
+@media (max-width: 768px) {
+  .footer-content-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: center;
+  }
+
+  .footer-column {
+    flex: 1 1 45%;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .footer-column ul {
+    display: inline-block;
+    text-align: left;
+  }
+
+  .footer-contacto-info {
+    text-align: center;
+  }
+
+  .footer-column h4 {
+    border-bottom: none;
+    padding-bottom: 5px;
+  }
+
+  .footer-legal {
+    text-align: center;
+  }
+
+  .footer-tienda h4 {
+    width: 100%;
+  }
+}

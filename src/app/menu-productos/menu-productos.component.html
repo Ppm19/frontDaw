@@ -1,0 +1,71 @@
+<div class="menu-productos-sidebar" [ngClass]="{ 'collapsed': !isExpanded }">
+  <button mat-icon-button class="menu-toggle-button" (click)="toggleMenu()" aria-label="Toggle menu">
+    <mat-icon>{{ isExpanded ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+  </button>
+
+  <div class="menu-content" [class.hidden]="!isExpanded">
+    <button mat-button class="menu-item main-item" routerLink="/">
+      <mat-icon>home</mat-icon>
+      <span class="menu-item-text">Home</span>
+    </button>
+    <button mat-button class="menu-item main-item" routerLink="/contacto">
+      <mat-icon>article</mat-icon>
+      <span class="menu-item-text">Contacto</span>
+    </button>
+    <button mat-button class="menu-item main-item profile-link-top" routerLink="/perfil" *ngIf="isAuthenticated">
+      <mat-icon>account_circle</mat-icon>
+      <span class="menu-item-text">Perfil</span>
+    </button>
+
+    <div class="category-group">
+      <button mat-button class="menu-item category-title-button" routerLink="/productos">
+        <span class="menu-item-text">Productos</span>
+      </button>
+
+      <div class="subcategory">
+        <button mat-button class="menu-item subcategory-title-button" routerLink="/productos/moviles">
+          <mat-icon>smartphone</mat-icon>
+          <span class="menu-item-text">Móviles</span>
+        </button>
+        <div class="sub-items-list">
+          <button mat-button class="menu-item sub-item" routerLink="/productos/moviles/apple">
+            <span class="menu-item-text">-Apple</span>
+          </button>
+          <button mat-button class="menu-item sub-item" routerLink="/productos/moviles/google">
+            <span class="menu-item-text">-Google</span>
+          </button>
+          <button mat-button class="menu-item sub-item" routerLink="/productos/moviles/xiaomi">
+            <span class="menu-item-text">-Xiaomi</span>
+          </button>
+          <button mat-button class="menu-item sub-item" routerLink="/productos/moviles/huawei">
+            <span class="menu-item-text">-Huawei</span>
+          </button>
+          <button mat-button class="menu-item sub-item" routerLink="/productos/moviles/samsung">
+            <span class="menu-item-text">-Samsung</span>
+          </button>
+          <button mat-button class="menu-item sub-item" routerLink="/productos/moviles/motorola">
+            <span class="menu-item-text">-Motorola</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="subcategory">
+        <button mat-button class="menu-item subcategory-title-button" routerLink="/productos/accesorios">
+          <mat-icon>headphones</mat-icon>
+          <span class="menu-item-text">Accesorios</span>
+        </button>
+        <div class="sub-items-list">
+          <button mat-button class="menu-item sub-item" routerLink="/productos/accesorios/auriculares">
+            <span class="menu-item-text">-Auriculares</span>
+          </button>
+          <button mat-button class="menu-item sub-item" routerLink="/productos/accesorios/cargador">
+            <span class="menu-item-text">-Cargadores</span>
+          </button>
+          <button mat-button class="menu-item sub-item" routerLink="/productos/accesorios/bateriaPortatil">
+            <span class="menu-item-text">-Batería Portátil</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
