@@ -30,7 +30,7 @@
       <div class="pedido-details">
         <h4>Dirección de Envío</h4>
         <p>{{ pedido.direccionEnvio }}</p>
-        
+
         <h4>Artículos del Pedido</h4>
         <ul class="articles-list">
           <li *ngFor="let item of pedido.articulos">
@@ -39,7 +39,45 @@
             <span class="price">{{ item.precioAlComprar | currency:'EUR' }}</span>
           </li>
         </ul>
-        
+
+        <div class="total-final">
+          <strong>Total: {{ pedido.totalPedido | currency:'EUR' }}</strong>
+        </div>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <h2 class="mt-4">Pedidos Aceptados</h2>
+
+  <div *ngIf="!isLoading && pedidosAceptados.length === 0" class="no-pedidos">
+    <p>No hay pedidos aceptados para mostrar.</p>
+  </div>
+
+  <mat-accordion *ngIf="!isLoading && pedidosAceptados.length > 0">
+    <mat-expansion-panel *ngFor="let pedido of pedidosAceptados; let i = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Pedido #{{ i + 1 }} - {{ pedido.nombreCompletoComprador }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <span>Total: {{ pedido.totalPedido | currency:'EUR' }}</span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="pedido-details">
+        <h4>Dirección de Envío</h4>
+        <p>{{ pedido.direccionEnvio }}</p>
+
+        <h4>Artículos del Pedido</h4>
+        <ul class="articles-list">
+          <li *ngFor="let item of pedido.articulos">
+            <span class="quantity">{{ item.cantidad }}x</span>
+            <span class="name">{{ item.nombreProducto }}</span>
+            <span class="price">{{ item.precioAlComprar | currency:'EUR' }}</span>
+          </li>
+        </ul>
+
         <div class="total-final">
           <strong>Total: {{ pedido.totalPedido | currency:'EUR' }}</strong>
         </div>

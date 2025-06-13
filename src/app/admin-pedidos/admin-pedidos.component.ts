@@ -14,15 +14,16 @@ import { MaterialModule } from '../material.module';
 })
 export class AdminPedidosComponent implements OnInit {
 	pedidosPendientes: Pedido[] = [];
+	pedidosAceptados: Pedido[] = [];
 	isLoading = true;
 
 	constructor(private pedidosService: PedidosService, private router: Router) {}
 
 	ngOnInit(): void {
-		this.cargarPedidosPendientes();
+		this.cargarPedidos();
 	}
 
-	cargarPedidosPendientes(): void {
+	cargarPedidos(): void {
 		this.isLoading = true;
 		this.pedidosService.getPedidos('Pendiente').subscribe({
 			next: (pedidos) => {
@@ -32,6 +33,15 @@ export class AdminPedidosComponent implements OnInit {
 			error: (err) => {
 				console.error('Error al cargar los pedidos pendientes', err);
 				this.isLoading = false;
+			}
+		});
+
+		this.pedidosService.getPedidos('Aceptado').subscribe({
+			next: (pedidos) => {
+				this.pedidosAceptados = pedidos;
+			},
+			error: (err) => {
+				console.error('Error al cargar los pedidos aceptados', err);
 			}
 		});
 	}
@@ -44,7 +54,7 @@ export class AdminPedidosComponent implements OnInit {
 
 		this.pedidosService.actualizarPedido(id, actualizaciones).subscribe({
 			next: () => {
-				this.cargarPedidosPendientes();
+				this.cargarPedidos();
 			},
 			error: (err) => console.error('Error al aceptar el pedido', err)
 		});
@@ -54,7 +64,7 @@ export class AdminPedidosComponent implements OnInit {
 		if (confirm('¿Estás seguro de que quieres rechazar y eliminar este pedido?')) {
 			this.pedidosService.eliminarPedido(id).subscribe({
 				next: () => {
-					this.cargarPedidosPendientes();
+					this.cargarPedidos();
 				},
 				error: (err) => console.error('Error al rechazar el pedido', err)
 			});
