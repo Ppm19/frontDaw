@@ -134,6 +134,6 @@ a[mat-stroked-button][color="accent"]:hover {
   padding: 10px 24px !important;
 }
 
-.detalle-producto-dialog .mat-dialog-container {
-  z-index: 1050 !important;
+.cdk-overlay-container {
+  z-index: 1050;
 }
