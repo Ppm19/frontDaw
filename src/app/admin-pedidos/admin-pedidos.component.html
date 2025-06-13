@@ -1,5 +1,7 @@
 <div class="admin-pedidos-container">
-  <h1>Gestión de Pedidos Pendientes</h1>
+  <h1>Gestión de Pedidos</h1>
+
+  <h2>Pedidos Pendientes</h2>
 
   <div *ngIf="isLoading" class="spinner-container">
     <mat-spinner></mat-spinner>
@@ -48,7 +50,9 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <h2 class="mt-4">Pedidos Aceptados</h2>
+  <mat-divider style="margin: 2rem 0;"></mat-divider>
+
+  <h2>Pedidos Aceptados</h2>
 
   <div *ngIf="!isLoading && pedidosAceptados.length === 0" class="no-pedidos">
     <p>No hay pedidos aceptados para mostrar.</p>
@@ -61,7 +65,11 @@
           Pedido #{{ i + 1 }} - {{ pedido.nombreCompletoComprador }}
         </mat-panel-title>
         <mat-panel-description>
-          <span>Total: {{ pedido.totalPedido | currency:'EUR' }}</span>
+          <span class="actions">
+            <button mat-icon-button color="warn" title="Eliminar Pedido" (click)="eliminarPedidoAceptado(pedido._id!); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
         </mat-panel-description>
       </mat-expansion-panel-header>
 

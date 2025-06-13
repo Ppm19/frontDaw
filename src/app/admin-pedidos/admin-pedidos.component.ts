@@ -71,6 +71,17 @@ export class AdminPedidosComponent implements OnInit {
 		}
 	}
 
+	eliminarPedidoAceptado(id: string): void {
+		if (confirm('¿Estás seguro de que quieres eliminar este pedido? Esta acción es permanente.')) {
+			this.pedidosService.eliminarPedido(id).subscribe({
+				next: () => {
+					this.cargarPedidos();
+				},
+				error: (err) => console.error('Error al eliminar el pedido', err)
+			});
+		}
+	}
+
 	volverAlMenu(): void {
 		this.router.navigate([ '/menu-admin' ]);
 	}
