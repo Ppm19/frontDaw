@@ -108,14 +108,10 @@ export class RealizarPedidoComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if (this.pedidoForm.invalid) {
       this.pedidoForm.markAllAsTouched();
-      alert('Por favor, completa todos los campos requeridos correctamente.');
       return;
     }
 
     if (this.itemsCarrito.length === 0) {
-      alert(
-        'Tu carrito está vacío. Añade productos antes de realizar un pedido.'
-      );
       return;
     }
 
@@ -154,7 +150,6 @@ export class RealizarPedidoComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (pedidoGuardado) => {
           this.isLoading = false;
-          alert(`¡Pedido ${pedidoGuardado._id} realizado con éxito!`);
           this.carritoService.limpiarCarrito();
           this.pedidoForm.reset();
           this.router.navigate(['/productos']);
@@ -162,10 +157,6 @@ export class RealizarPedidoComponent implements OnInit, OnDestroy {
         error: (err) => {
           this.isLoading = false;
           console.error('Error al crear el pedido:', err);
-          alert(
-            `Error al crear el pedido: ${err.message || 'Inténtalo de nuevo más tarde.'}
-            Verifica los datos e inténtalo de nuevo.`
-          );
         },
       });
     this.subscriptions.add(pedidoSub);

@@ -84,10 +84,6 @@ export class RegistroComponent implements OnInit {
 
     this.loginRegistroService.registrarUsuario(nuevoUsuario).subscribe({
       next: (respuesta) => {
-        this.snackBar.open('¡Registro exitoso! Ahora puedes iniciar sesión.', 'Cerrar', {
-          duration: 5000,
-          panelClass: ['success-snackbar']
-        });
         this.dialogRef.close(true);
       },
       error: (err) => {

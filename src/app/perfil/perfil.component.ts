@@ -58,7 +58,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
 		private loginRegistroService: LoginRegistroService,
 		private fb: FormBuilder,
 		private router: Router,
-		private snackBar: MatSnackBar,
 		private pedidosService: PedidosService,
 		private productosService: ProductosService,
 		private carritoService: CarritoService,
@@ -132,7 +131,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
 				},
 				error: (error) => {
 					console.error('Error al cargar los pedidos del usuario:', error);
-					this.snackBar.open('Error al cargar los pedidos: ' + (error.error?.message || error.message), 'Cerrar', { duration: 5000, panelClass: ['error-snackbar'] });
 				}
 			});
 		} else {
@@ -181,7 +179,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
 		if (!this.usuario || !this.usuario._id) {
 			this.errorActualizacion = 'Error: No se pudo identificar al usuario.';
-			this.snackBar.open(this.errorActualizacion, 'Cerrar', { duration: 5000, panelClass: ['error-snackbar'] });
 			return;
 		}
 
@@ -200,13 +197,11 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
 		this.loginRegistroService.actualizarUsuario(this.usuario._id, datosParaActualizar).subscribe({
 			next: (usuarioActualizadoRespuesta) => {
-				this.snackBar.open('Perfil actualizado con éxito', 'Cerrar', { duration: 3000, panelClass: ['success-snackbar'] });
 				this.modoEdicion = false;
 			},
 			error: (error) => {
 				console.error('Error al actualizar el perfil:', error);
 				this.errorActualizacion = error.message || 'Ocurrió un error al actualizar el perfil.';
-				this.snackBar.open(this.errorActualizacion || 'Error desconocido al actualizar.', 'Cerrar', { duration: 7000, panelClass: ['error-snackbar'] });
 			}
 		});
 	}
@@ -218,30 +213,26 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
 	guardarNuevaDireccion(): void {
 		if (!this.nuevaDireccionInput.trim()) {
-			this.snackBar.open('La dirección no puede estar vacía.', 'Cerrar', { duration: 3000, panelClass: ['info-snackbar'] });
 			return;
 		}
 		if (this.usuario && this.usuario._id) {
 			const direccionAAgregar = this.nuevaDireccionInput.trim();
 			if (this.usuario.direcciones && this.usuario.direcciones.includes(direccionAAgregar)) {
-				this.snackBar.open('Esta dirección ya existe.', 'Cerrar', { duration: 3000, panelClass: ['info-snackbar'] });
 				return;
 			}
 			const nuevasDirecciones = [...(this.usuario.direcciones || []), direccionAAgregar];
-			
+
 			this.loginRegistroService.actualizarUsuario(this.usuario._id, { direcciones: nuevasDirecciones }).subscribe({
 				next: (usuarioActualizado) => {
-					this.snackBar.open('Dirección añadida con éxito.', 'Cerrar', { duration: 3000, panelClass: ['success-snackbar'] });
 					this.mostrandoFormularioNuevaDireccion = false;
 					this.nuevaDireccionInput = '';
 				},
 				error: (err) => {
 					console.error('Error al guardar la nueva dirección:', err);
-					this.snackBar.open('Error al añadir dirección: ' + (err.error?.message || err.message || 'Error desconocido'), 'Cerrar', { duration: 5000, panelClass: ['error-snackbar'] });
 				}
 			});
 		} else {
-			this.snackBar.open('No se pudo guardar la dirección: Usuario no identificado.', 'Cerrar', { duration: 5000, panelClass: ['error-snackbar'] });
+			console.warn('No se pudo guardar la dirección: Usuario no identificado.');
 		}
 	}
 
@@ -250,15 +241,14 @@ export class PerfilComponent implements OnInit, OnDestroy {
 			const nuevasDirecciones = this.usuario.direcciones.filter(d => d !== direccionAEliminar);
 			this.loginRegistroService.actualizarUsuario(this.usuario._id, { direcciones: nuevasDirecciones }).subscribe({
 				next: (usuarioActualizado) => {
-					this.snackBar.open('Dirección eliminada con éxito.', 'Cerrar', { duration: 3000, panelClass: ['success-snackbar'] });
+					console.log('Dirección eliminada con éxito.');
 				},
 				error: (err) => {
 					console.error('Error al eliminar la dirección:', err);
-					this.snackBar.open('Error al eliminar dirección: ' + (err.error?.message || err.message || 'Error desconocido'), 'Cerrar', { duration: 5000, panelClass: ['error-snackbar'] });
 				}
 			});
 		} else {
-			this.snackBar.open('No se pudo eliminar la dirección: Usuario o direcciones no encontradas.', 'Cerrar', { duration: 5000, panelClass: ['error-snackbar'] });
+			console.warn('No se pudo eliminar la dirección: Usuario o direcciones no encontradas.');
 		}
 	}
 
@@ -276,7 +266,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
 				this.productosService.getProductoPorId(id).pipe(
 					catchError(err => {
 						console.error(`Error al cargar producto ${id} de lista de deseos:`, err);
-						this.snackBar.open(`Error al cargar el producto con ID: ${id} de tus favoritos.`, 'Cerrar', { duration: 4000 });
 						return of(null);
 					})
 				)
@@ -307,48 +296,30 @@ export class PerfilComponent implements OnInit, OnDestroy {
 	}
 
 	eliminarDeListaDeseos(productoId: string, event?: MouseEvent): void {
-		if (event) {
-			event.stopPropagation();
-		}
+		event?.stopPropagation();
 		if (this.usuario && this.usuario._id && this.usuario.listaDeseos) {
 			const nuevaLista = this.usuario.listaDeseos.filter(id => id !== productoId);
 			this.loginRegistroService.actualizarUsuario(this.usuario._id, { listaDeseos: nuevaLista })
 				.subscribe({
 					next: () => {
-						this.snackBar.open('Producto eliminado de tu lista de deseos.', 'Cerrar', { duration: 3000, panelClass: ['success-snackbar'] });
+						console.log('Producto eliminado de la lista de deseos.');
 					},
 					error: (err) => {
 						console.error('Error al eliminar de lista de deseos:', err);
-						this.snackBar.open('Error al eliminar el producto de tus favoritos.', 'Cerrar', { duration: 3000, panelClass: ['error-snackbar'] });
 					}
 				});
+		} else {
+			console.error("Usuario no autenticado o lista de deseos no encontrada.");
 		}
 	}
 
 	anadirAlCarritoYQuitarDeDeseos(producto: Producto, event?: MouseEvent): void {
-		if (event) {
-			event.stopPropagation();
-		}
-		if (!producto._id) {
-			console.error('Producto sin ID, no se puede procesar.');
-			return;
-		}
-
+		event?.stopPropagation();
 		this.carritoService.agregarProducto(producto);
-		this.snackBar.open(`${producto.nombre} añadido al carrito.`, 'Cerrar', { duration: 3000, panelClass: ['success-snackbar'] });
-
-		if (this.usuario && this.usuario._id && this.usuario.listaDeseos) {
-			const nuevaLista = this.usuario.listaDeseos.filter(id => id !== producto._id);
-			this.loginRegistroService.actualizarUsuario(this.usuario._id, { listaDeseos: nuevaLista })
-				.subscribe({
-					next: () => {
-						console.log('Producto también eliminado de la lista de deseos tras añadir al carrito.');
-					},
-					error: (err) => {
-						console.error('Error al eliminar de lista de deseos tras añadir al carrito:', err);
-						this.snackBar.open('Producto añadido al carrito, pero hubo un error al quitarlo de favoritos.', 'Cerrar', { duration: 4000, panelClass: ['info-snackbar'] });
-					}
-				});
+		if (producto._id) {
+			this.eliminarDeListaDeseos(producto._id, event);
+		} else {
+			console.error("El producto no tiene ID, no se puede eliminar de la lista de deseos.");
 		}
 	}
 }

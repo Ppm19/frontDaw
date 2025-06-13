@@ -104,7 +104,6 @@ export class ListaProductosComponent implements OnInit {
 
 	anadirAlCarrito(producto: Producto): void {
 		this.carritoService.agregarProducto(producto);
-		this.snackBar.open(`${producto.nombre} añadido al carrito`, 'Cerrar', { duration: 3000 });
 	}
 
 	mostrarDetalles(producto: Producto): void {

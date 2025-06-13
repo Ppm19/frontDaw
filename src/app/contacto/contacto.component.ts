@@ -51,10 +51,8 @@ export class ContactoComponent implements OnInit, OnDestroy {
 	onSubmit() {
 		if (this.contactForm.valid) {
 			console.log('Formulario enviado:', this.contactForm.value);
-			this.snackBar.open('Mensaje enviado correctamente', 'Cerrar', {
-				duration: 3000
-			});
 			this.contactForm.reset();
+			this.contactForm.get('tipo')?.setErrors(null);
 		} else {
 			this.snackBar.open('Por favor, revisa los campos del formulario', 'Cerrar', {
 				duration: 3000
