@@ -13,7 +13,7 @@ import { MaterialModule } from '../material.module';
 	styleUrls: [ './menu-productos.component.css' ]
 })
 export class MenuProductosComponent implements OnInit, OnDestroy {
-	isExpanded = true;
+	isExpanded = false;
 	isAuthenticated: boolean = false;
 	private authSubscription?: Subscription;
 

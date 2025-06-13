@@ -112,7 +112,8 @@ export class ListaProductosComponent implements OnInit {
 			data: { producto: producto },
 			width: '800px',
 			maxWidth: '90vw',
-			autoFocus: false
+			autoFocus: false,
+			panelClass: 'detalle-producto-dialog'
 		});
 	}
 

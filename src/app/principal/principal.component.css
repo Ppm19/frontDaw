@@ -185,3 +185,47 @@
   padding: 40px 0;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 768px) {
+  .titulo-superpuesto {
+    font-size: 2.5rem;
+  }
+
+  .info-grid-wrapper {
+    grid-template-columns: 1fr;
+    width: 90%;
+    gap: 30px;
+  }
+
+  .info-item {
+    gap: 20px;
+    padding: 30px;
+  }
+
+  .info-item img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .section-title-wrapper h2 {
+    font-size: 2rem;
+  }
+
+  .faq-title-wrapper h2 {
+    font-size: 2rem;
+  }
+
+  .marcas-carousel-section {
+    height: auto;
+    min-height: 40vh;
+  }
+
+  .marcas-carousel-container-single {
+    height: 250px;
+  }
+
+  .marca-logo-single img {
+    max-width: 250px;
+    max-height: 250px;
+  }
+}
