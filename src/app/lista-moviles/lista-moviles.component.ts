@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterModule, ActivatedRoute } from '@angular/router';
 import { MaterialModule } from '../material.module';
@@ -13,6 +13,7 @@ import { LoginRegistroService } from '../login-registro.service';
 import { Usuario } from '../models/Usuario';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-lista-moviles',
@@ -45,7 +46,8 @@ export class ListaMovilesComponent implements OnInit, OnDestroy {
     private loginRegistroService: LoginRegistroService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
@@ -95,13 +97,15 @@ export class ListaMovilesComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       },
       error: (err) => {
-        console.error(
-          `Error al cargar móviles ${marca ? 'de la marca ' + marca : ''}:`,
-          err
-        );
-        this.errorMensaje = `No se pudieron cargar los móviles ${
+        const mensajeError = `Error al cargar móviles ${
           marca ? 'de la marca ' + marca : ''
-        }. Inténtalo de nuevo más tarde.`;
+        }`;
+        if (isPlatformBrowser(this.platformId)) {
+          console.error(mensajeError + ':', err);
+        } else {
+          console.error(mensajeError + ' (SSR):', err.message);
+        }
+        this.errorMensaje = `${mensajeError}. Inténtalo de nuevo más tarde.`;
         this.isLoading = false;
       },
     });

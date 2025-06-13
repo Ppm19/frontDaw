@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterModule, ActivatedRoute, ParamMap } from '@angular/router';
 import { MaterialModule } from '../material.module';
@@ -13,6 +13,7 @@ import { LoginRegistroService } from '../login-registro.service';
 import { Usuario } from '../models/Usuario';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-lista-accesorios',
@@ -45,7 +46,8 @@ export class ListaAccesoriosComponent implements OnInit, OnDestroy {
     private loginRegistroService: LoginRegistroService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
@@ -88,10 +90,14 @@ export class ListaAccesoriosComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       },
       error: (err) => {
-        const mensajeBase = 'No se pudieron cargar los accesorios';
+        const mensajeBase = 'Error al cargar los accesorios';
         const detalleTipo = tipoAccesorio ? ` de tipo ${tipoAccesorio}` : '';
-        console.error(`${mensajeBase}${detalleTipo}:`, err);
-        this.errorMensaje = `${mensajeBase}${detalleTipo}. Inténtalo de nuevo más tarde.`;
+        if (isPlatformBrowser(this.platformId)) {
+          console.error(`${mensajeBase}${detalleTipo}:`, err);
+        } else {
+          console.error(`${mensajeBase}${detalleTipo} (SSR):`, err.message);
+        }
+        this.errorMensaje = `No se pudieron cargar los accesorios${detalleTipo}. Inténtalo de nuevo más tarde.`;
         this.isLoading = false;
       }
     });

@@ -16,6 +16,8 @@ import { LoginRegistroService } from '../login-registro.service';
 import { Usuario } from '../models/Usuario';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
 	selector: 'app-lista-productos',
@@ -50,7 +52,8 @@ export class ListaProductosComponent implements OnInit {
 		private carritoService: CarritoService,
 		private loginRegistroService: LoginRegistroService,
 		private snackBar: MatSnackBar,
-		public dialog: MatDialog
+		public dialog: MatDialog,
+		@Inject(PLATFORM_ID) private platformId: Object
 	) {}
 
 	ngOnInit(): void {
@@ -76,7 +79,11 @@ export class ListaProductosComponent implements OnInit {
 				this.isLoading = false;
 			},
 			error: (err) => {
-				console.error('Error al cargar productos:', err);
+				if (isPlatformBrowser(this.platformId)) {
+					console.error('Error al cargar productos:', err);
+				} else {
+					console.error('Error al cargar productos (SSR):', err.message);
+				}
 				this.errorMensaje = 'No se pudieron cargar los productos. Inténtalo de nuevo más tarde.';
 				this.isLoading = false;
 			}
